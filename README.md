@@ -104,6 +104,11 @@ function MSALInstanceFactory(): IPublicClientApplication {
 }
 ```
 
+Currently there seems to be an issue with `msal-browser` and redirect vs popup window for authentication.  Make sure the type is set to popup in both configuration locations within `app.module.ts`:
+```js
+interactionType: InteractionType.POPUP
+```
+
 ## 3. Web API call
 Create a new empty Angular component for the Web API call, the sample component is called `WeatherComponent`.
 ```js
