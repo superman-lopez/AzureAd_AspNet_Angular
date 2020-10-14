@@ -22,7 +22,7 @@ import { WeatherComponent } from './weather.component';
 function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
-	  clientId: 'e5c3ac17-09cc-41b4-8e56-433eac4ec8fe',
+	  clientId: '2ce51a62-4d0a-453b-8fe1-7ab0788f526f',
 	  authority: 'https://login.microsoftonline.com/organizations',
 	  redirectUri: 'https://localhost:5001/profile',
 	  postLogoutRedirectUri: 'https://localhost:5001'
@@ -33,7 +33,7 @@ function MSALInstanceFactory(): IPublicClientApplication {
 function MSALInterceptorConfigFactory(): MsalInterceptorConfig {
   const protectedResourceMap = new Map<string, Array<string>>()
   protectedResourceMap.set('https://graph.microsoft.com/v1.0/me', ['user.read'])
-  protectedResourceMap.set('/WeatherForecast', ['api://d42d264e-b928-405e-99e4-5c8b4b8dab15/user_access'])
+  protectedResourceMap.set('/WeatherForecast', ['api://574484f3-54ec-4368-af40-3e4091a44861/access_as_user'])
 
   return {
     interactionType: InteractionType.POPUP,
