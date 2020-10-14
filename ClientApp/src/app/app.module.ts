@@ -22,9 +22,8 @@ import { WeatherComponent } from './weather.component';
 function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
-      clientId: '2ce51a62-4d0a-453b-8fe1-7ab0788f526f',
-	  redirectUri: 'https://localhost:5001/profile',
-	  postLogoutRedirectUri: 'https://localhost:5001'
+		clientId: '2ce51a62-4d0a-453b-8fe1-7ab0788f526f',
+		redirectUri: 'https://localhost:5001/',
     }
   });
 }
@@ -35,7 +34,7 @@ function MSALInterceptorConfigFactory(): MsalInterceptorConfig {
   protectedResourceMap.set('/WeatherForecast', ['api://574484f3-54ec-4368-af40-3e4091a44861/access_as_user']);
 
   return {
-    interactionType: InteractionType.POPUP,
+    interactionType: InteractionType.REDIRECT,
     protectedResourceMap,
   };
 }
@@ -44,7 +43,7 @@ function MSALInterceptorConfigFactory(): MsalInterceptorConfig {
   declarations: [
     AppComponent,
     HomeComponent,
-	ProfileComponent,
+    ProfileComponent,
 	WeatherComponent
   ],
   imports: [
@@ -69,7 +68,7 @@ function MSALInterceptorConfigFactory(): MsalInterceptorConfig {
     {
       provide: MSAL_GUARD_CONFIG,
       useValue: {
-        interactionType: InteractionType.POPUP
+        interactionType: InteractionType.REDIRECT
       } as MsalGuardConfiguration
     },
     {

@@ -6,7 +6,7 @@ import { MsalGuard } from './msal';
 import { WeatherComponent } from './weather.component';
 
 const routes: Routes = [
-	{
+  	{
 		path: 'profile',
 		component: ProfileComponent,
 		canActivate: [

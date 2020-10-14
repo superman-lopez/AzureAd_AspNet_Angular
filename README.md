@@ -49,7 +49,7 @@ In `appsettings.json`:
 	"Instance": "https://login.microsoftonline.com/",
 	"Domain": "domain.com",
 	"TenantId": "$insert_tenant_id_here",
-	"ClientId": "d42d264e-b928-405e-99e4-5c8b4b8dab15"
+	"ClientId": "574484f3-54ec-4368-af40-3e4091a44861"
 },
 ```
 Make sure the `$insert_tenant_id_here` has the correct value: either `common` or `organizations`.  The `ClientId` is the application registration id.
@@ -81,32 +81,29 @@ Then the integration of the Angular and ASP.net http server can be tested at htt
 Following these instructions: https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-javascript-auth-code :
 - Select New registration and name the registration.  
 - After registration, under Platform configurations, select Add a platform. In the pane that opens select Single-page application.
-- Set the Redirect URI value to `https://localhost:5001/profile` (Note `https` protocol and the port number of the redirect).
-- Optionally set the Logout URL to `https://localhost:5001`, to prevent a login request being triggered post logout action.
+- Set the Redirect URI value to `https://localhost:5001/` (Note `https` protocol and the port number of the redirect).
 
 Next add the API permission, which is the Web API Application Registration that was instructed above.  
 - Select "API permission", and then "Add a permission".  
 - Under "My APIs" the previously registered API should show.  
 - Click the application, then select and add the permission `access-as-user`.  
 
-Next configure the library `msal-browser` in the `app.module.ts` to match the Application Registration, make sure to use the Client ID from the Application Registration related to the Single-page application (and not the Web API client id). Specify the correct value for `$insert_tenant_id_here` either `common` or `organizations`:
+Next configure the library `msal-browser` in the `app.module.ts` to match the Application Registration, make sure to use the Client ID from the Application Registration related to the Single-page application (and not the Web API client id).
 
 ```js
 function MSALInstanceFactory(): IPublicClientApplication {
-	  return new PublicClientApplication({
-		    auth: {
-				clientId: 'e5c3ac17-09cc-41b4-8e56-433eac4ec8fe',
-				authority: 'https://login.microsoftonline.com/organizations',
-				redirectUri: 'https://localhost:5001/profile',
-				postLogoutRedirectUri: 'https://localhost:5001'
-		    }
+	return new PublicClientApplication({
+		auth: {
+			clientId: '2ce51a62-4d0a-453b-8fe1-7ab0788f526f',
+			redirectUri: 'https://localhost:5001/',
+		}
 	  });
 }
 ```
 
-Currently there seems to be an issue with `msal-browser` and redirect vs popup window for authentication.  Make sure the type is set to popup in both configuration locations within `app.module.ts`:
+Choose between popup or redirect in both configuration locations within `app.module.ts`:
 ```js
-interactionType: InteractionType.POPUP
+interactionType: InteractionType.REDIRECT
 ```
 
 ## 3. Web API call
@@ -168,7 +165,7 @@ In `app.module.ts` will add a Map for our API with the correct scope:
 ```js
 function MSALInterceptorConfigFactory(): MsalInterceptorConfig {
 ...
-  protectedResourceMap.set('/WeatherForecast', ['api://d42d264e-b928-405e-99e4-5c8b4b8dab15/access_as_user'])
+  protectedResourceMap.set('/WeatherForecast', ['api://574484f3-54ec-4368-af40-3e4091a44861/access_as_user']);
 ...
 }
 ```
